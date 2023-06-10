@@ -5,6 +5,11 @@ Welcome to Astronomer! This project was generated after you ran 'astro dev init'
 
 Project Contents
 ================
+### this section of the project is experimenting with using airflow to set up the data pipelne
+
+
+Default instructions 
+================
 
 Your Astro project contains the following files and folders:
 
