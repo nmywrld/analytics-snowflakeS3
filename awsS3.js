@@ -1,9 +1,32 @@
-import { S3Client } from "@aws-sdk/client-s3";
+import { fileURLToPath } from "url";
+import { readdirSync, readFileSync, writeFileSync } from "fs";
+
+// Local helper utils.
+import { dirnameFromMetaUrl } from "libs/utils/util-fs.js";
+import { promptForText, promptToContinue } from "libs/utils/util-io.js";
+import { wrapText } from "libs/utils/util-string.js";
+
+import { 
+    S3Client,
+    CreateBucketCommand,
+    PutObjectCommand,
+    ListObjectsCommand,
+    CopyObjectCommand,
+    GetObjectCommand,
+    DeleteObjectsCommand,
+    DeleteBucketCommand, 
+} from "@aws-sdk/client-s3";
+
+import { fromIni } from "@aws-sdk/credential-providers"; 
 
 const REGION = `ap-southeast-1`;
 
-const s3Client = new S3Client({ region: REGION });
+const s3Client = new S3Client({ 
+    region: REGION,
+    credentials: fromIni({profile: 'personal'})
+});
 
+// snippet-start:[javascript.v3.s3.scenarios.basic.CreateBucket]
 export const createBucket = async () => {
     const bucketName = await promptForText(
       "Enter a bucket name. Bucket names must be globally unique:"
@@ -43,11 +66,11 @@ export const uploadFilesToBucket = async ({ bucketName, folderPath }) => {
 
 // snippet-start:[javascript.v3.s3.scenarios.basic.ListObjects]
 export const listFilesInBucket = async ({ bucketName }) => {
-const command = new ListObjectsCommand({ Bucket: bucketName });
-const { Contents } = await s3Client.send(command);
-const contentsList = Contents.map((c) => ` • ${c.Key}`).join("\n");
-console.log("\nHere's a list of files in the bucket:");
-console.log(contentsList + "\n");
+    const command = new ListObjectsCommand({ Bucket: bucketName });
+    const { Contents } = await s3Client.send(command);
+    const contentsList = Contents.map((c) => ` • ${c.Key}`).join("\n");
+    console.log("\nHere's a list of files in the bucket:");
+    console.log(contentsList + "\n");
 };
 // snippet-end:[javascript.v3.s3.scenarios.basic.ListObjects]
 
@@ -172,6 +195,6 @@ const main = async () => {
 // snippet-start:[javascript.v3.s3.scenarios.basic.runner]
 // Invoke main function if this file was run directly.
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-main();
+    main();
 }
 // snippet-end:[javascript.v3.s3.scenarios.basic.runner]
