@@ -6,10 +6,10 @@
 - use AWS and snowflake/databricks SDKs to interface 
 
 ## Project requirements
-Things that need to be done
-1. connect and auth s3 (DONE)
+Things that need to be done:
+1. connect and auth s3 (**DONE**)
 2. connect and auth snowflake/databricks account
-3. create S3 watcher functions to watch for incoming files
+3. create S3 functions to upload/watch for incoming files (**in progress**)
     - depending on the file that is uploaded, it needs to stream to the correct schema/table in our data lake
 4. create database/schemas/tables (prereqs) if not created 
     - if prereqs return as not created, must initialise prereqs
