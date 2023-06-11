@@ -211,7 +211,6 @@ export const s3 = {
             console.error(err);
         }
     }
-    
 }
 
 
