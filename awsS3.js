@@ -2,9 +2,10 @@ import { fileURLToPath } from "url";
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 
 // Local helper utils.
-import { dirnameFromMetaUrl } from "libs/utils/util-fs.js";
-import { promptForText, promptToContinue } from "libs/utils/util-io.js";
-import { wrapText } from "libs/utils/util-string.js";
+import { dirnameFromMetaUrl } from "./libs/utils/util-fs.js";
+import { promptForText, promptToContinue } from "./libs/utils/util-io.js";
+import { wrapText } from "./libs/utils/util-string.js";
+
 
 import { 
     S3Client,
@@ -18,47 +19,28 @@ import {
 } from "@aws-sdk/client-s3";
 
 import { fromIni } from "@aws-sdk/credential-providers"; 
-import { AsyncResource } from "async_hooks";
-import { ApplySecurityGroupsToClientVpnTargetNetworkCommand } from "@aws-sdk/client-ec2";
 
 const REGION = `ap-southeast-1`;
 
 const s3Client = new S3Client({ 
     region: REGION,
-    credentials: fromIni({profile: 'personal'})
+    credentials: fromIni({
+        filepath: './.aws/credentials.ini',
+        profile: 'default'
+    })
 });
 
-// export const histDB = {
-//     tableName: "queryHist",
-//     db: null,
-//     ready: null,
-  
-//     create: async function (
-//       currQuery,
-//       currDesc,
-//     ) {
-//       // await this.ready;
-  
-//       const query = `INSERT into ${this.tableName} 
-//       (queryUsed, desc)
-//       VALUES (?, ?)
-//       RETURNING id;
-//       `;
-//       // console.log(currQuery);
-//       // console.log(currDesc);
-  
-//       const rawResults = await this.__query(query, [
-//         currQuery,
-//         currDesc,
-//       ]);
-  
-//       // console.log(this.db)
-  
-//       return rawResults;
-  
-//     },}
+export const s3func = {
+    REGION: `ap-southeast-1`,
 
-export const s3 = {
+    // s3Client: new S3Client({ 
+    //     region: REGION,
+    //     credentials: fromIni({
+    //         filepath: './.aws/credentials.ini',
+    //         profile: 'default'
+    //     })
+    // }),
+
     createBucket: async function() {
         const bucketName = await promptForText(
             "Enter a bucket name. Bucket names must be globally unique:"
@@ -181,32 +163,32 @@ export const s3 = {
         try {
             console.log(wrapText("Welcome to the Amazon S3 getting started example."));
             console.log("Let's create a bucket.");
-            const bucketName = await createBucket();
+            const bucketName = await this.createBucket();
             await promptToContinue();
     
             console.log(wrapText("File upload."));
             console.log(
             "I have some default files ready to go. You can edit the source code to provide your own."
             );
-            await uploadFilesToBucket({
+            await this.uploadFilesToBucket({
             bucketName,
             folderPath: OBJECT_DIRECTORY,
             });
     
-            await listFilesInBucket({ bucketName });
+            await this.listFilesInBucket({ bucketName });
             await promptToContinue();
     
             console.log(wrapText("Copy files."));
-            await copyFileFromBucket({ destinationBucket: bucketName });
-            await listFilesInBucket({ bucketName });
+            await this.copyFileFromBucket({ destinationBucket: bucketName });
+            await this.listFilesInBucket({ bucketName });
             await promptToContinue();
     
             console.log(wrapText("Download files."));
-            await downloadFilesFromBucket({ bucketName });
+            await this.downloadFilesFromBucket({ bucketName });
     
             console.log(wrapText("Clean up."));
-            await emptyBucket({ bucketName });
-            await deleteBucket({ bucketName });
+            await this.emptyBucket({ bucketName });
+            await this.deleteBucket({ bucketName });
         } catch (err) {
             console.error(err);
         }
