@@ -4,13 +4,13 @@
 - scope the data requirements to build our e-commerce analytics platform (link to git project)
 - configure AWS IAM policies and S3 buckets to accept snowflake/databricks connections
     - create IAM permissions
-    - 
+    - configure snowflake side to connect 
 - use AWS and snowflake/databricks SDKs to interface 
 
 ## Project requirements
 Things that need to be done:
-1. [x] connect and auth s3 (**DONE**)
-2. [ ] connect and auth snowflake/databricks account
+1. connect and auth s3 (**DONE**)
+2. connect and auth snowflake/databricks account
 3. create S3 functions to upload/watch for incoming files (**in progress**)
     - depending on the file that is uploaded, it needs to stream to the correct schema/table in our snowflake
     - likely will handle json files
