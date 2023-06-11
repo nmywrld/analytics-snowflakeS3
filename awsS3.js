@@ -22,6 +22,7 @@ import { fromIni } from "@aws-sdk/credential-providers";
 
 const REGION = `ap-southeast-1`;
 
+// create local file with ~/.aws/credentials.ini with your AWS access key and secret access key
 const s3Client = new S3Client({ 
     region: REGION,
     credentials: fromIni({
