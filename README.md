@@ -10,7 +10,7 @@
 ## Project requirements
 Things that need to be done:
 1. connect and auth s3 (**DONE**)
-2. connect and auth snowflake/databricks account
+2. connect and auth snowflake/databricks account (**DONE**)
 3. create S3 functions to upload/watch for incoming files (**in progress**)
     - depending on the file that is uploaded, it needs to stream to the correct schema/table in our snowflake
     - likely will handle json files
