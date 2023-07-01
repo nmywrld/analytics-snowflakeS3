@@ -42,6 +42,7 @@ export const snowflakeConnection = {
                     if (err) {
                         console.error('Unable to connect: ' + err.message);
                         } 
+                        
                     else {
                         console.log('Successfully connected to Snowflake.');
                         // Optional: store the connection ID.
