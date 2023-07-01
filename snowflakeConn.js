@@ -17,6 +17,9 @@ const privateKey = privateKeyObj.export({
 
 
 export const snowflakeConnection = {
+    ready: false,
+
+
     connection: snowflake.createConnection({
         // account: https://vk10312.ap-southeast-1.snowflakecomputing.com,
         // account: OISIGJU.BE51503,
@@ -34,20 +37,22 @@ export const snowflakeConnection = {
     }),
 
     init: async function(){
-        this.connection.connect(
-            function(err, conn) {
-                if (err) {
-                    console.error('Unable to connect: ' + err.message);
-                    } 
-                else {
-                    console.log('Successfully connected to Snowflake.');
-                    // Optional: store the connection ID.
-                    }
-            }
-        )
+        if (!this.ready){
+            this.connection.connect(
+                function(err, conn) {
+                    if (err) {
+                        console.error('Unable to connect: ' + err.message);
+                        } 
+                        
+                    else {
+                        console.log('Successfully connected to Snowflake.');
+                        // Optional: store the connection ID.
+                        }
+                }
+            )
+        }
+
     },
-
-
 
 }
 
