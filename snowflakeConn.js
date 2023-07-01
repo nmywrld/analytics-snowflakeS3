@@ -19,6 +19,7 @@ const privateKey = privateKeyObj.export({
 export const snowflakeConnection = {
     ready: false,
 
+
     connection: snowflake.createConnection({
         // account: https://vk10312.ap-southeast-1.snowflakecomputing.com,
         // account: OISIGJU.BE51503,
@@ -52,8 +53,6 @@ export const snowflakeConnection = {
         }
 
     },
-
-
 
 }
 
