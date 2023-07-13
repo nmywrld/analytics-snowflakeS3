@@ -24,3 +24,4 @@ Things that need to be done:
 6. create snowflake upload functions
     - after data is transformed as needed, use respective functions to stream data into snowflake
 
+
